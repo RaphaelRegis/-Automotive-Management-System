@@ -36,31 +36,21 @@ public class FuncionarioController {
         return ResponseEntity.ok(funcionarioService.findAllFuncionarios());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Funcionario> findFuncionarioById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(funcionarioService.findById(id));
+    @GetMapping("/{idFuncionario}")
+    public ResponseEntity<Funcionario> findFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario) {
+        return ResponseEntity.ok(funcionarioService.findById(idFuncionario));
     }
 
     // UPDATE
-    @PatchMapping("/{id}")
-    public ResponseEntity<Funcionario> updateFuncionarioById(@PathVariable("id") Integer id, @RequestBody FuncionarioDTO funcionarioDTO) {
-        return ResponseEntity.ok(funcionarioService.updateById(id, funcionarioDTO));
-    }
-
-    @PatchMapping("/liderarEquipe/{idFuncionario}/{idEquipe}")
-    public ResponseEntity<Funcionario> definirLiderancaDeEquipe(@PathVariable("idFuncionario") Integer idFuncionario, @PathVariable("idEquipe") Integer idEquipe) {
-        return ResponseEntity.ok(funcionarioService.definirLiderEquipe(idFuncionario, idEquipe));
-    }
-
-    @PatchMapping("/integrarEquipe/{idFuncionario}/{idEquipe}")
-    public ResponseEntity<Funcionario> integrarEquipe(@PathVariable("idFuncionario") Integer idFuncionario, @PathVariable("idEquipe") Integer idEquipe) {
-       return ResponseEntity.ok(funcionarioService.integrarEquipe(idFuncionario, idEquipe));
+    @PatchMapping("/{idFuncionario}")
+    public ResponseEntity<Funcionario> updateFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario, @RequestBody FuncionarioDTO funcionarioDTO) {
+        return ResponseEntity.ok(funcionarioService.updateById(idFuncionario, funcionarioDTO));
     }
 
     // DELETE
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Funcionario> deleteFuncionarioById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(funcionarioService.deleteById(id));
+    @DeleteMapping("/{idFuncionario}")
+    public ResponseEntity<Funcionario> deleteFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario) {
+        return ResponseEntity.ok(funcionarioService.deleteById(idFuncionario));
     }
 
 }

@@ -2,15 +2,15 @@ package com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities;
 
 import java.util.List;
 
-import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities.Equipe;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.MembroEquipe;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,10 +43,10 @@ public class Funcionario {
     private String email;
     private String telefone;
 
-    @OneToOne(mappedBy = "responsavel")
-    private Equipe equipeLiderada;
+    /*@ManyToMany(fetch = FetchType.EAGER,mappedBy = "membros")
+    private List<Equipe> equipes;*/
 
-    @ManyToMany(mappedBy = "membros")
-    private List<Equipe> equipes;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "funcionario")
+    private List<MembroEquipe> membroEquipe;
 
 }

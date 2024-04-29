@@ -19,10 +19,6 @@ public interface FuncionarioService {
     // UPDATE
     Funcionario updateById(Integer id, FuncionarioDTO funcionarioDTO);
 
-    Funcionario definirLiderEquipe(Integer idFuncionario, Integer idEquipe);
-    
-    Funcionario integrarEquipe(Integer idFuncionario, Integer idEquipe);
-
     // DELETE
     Funcionario deleteById(Integer id);
 
