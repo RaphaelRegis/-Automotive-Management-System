@@ -40,7 +40,6 @@ public class Orcamento {
     
     private double total_orcamento;
 
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_responsavel", referencedColumnName = "id_funcionario")
     private Funcionario responsavel;

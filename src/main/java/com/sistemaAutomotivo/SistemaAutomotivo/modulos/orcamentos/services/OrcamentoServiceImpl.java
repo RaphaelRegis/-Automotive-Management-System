@@ -28,13 +28,11 @@ public class OrcamentoServiceImpl implements OrcamentoService {
     
     @Override
     public Orcamento saveOrcamento(OrcamentoDTO orcamentoDTO) {
-        // colocar if existsByCPF
         return orcamentoRepository.save(DTOtoOrcamento(orcamentoDTO));
     }
 
     @Override
     public List<Orcamento> findAllOrcamentos() {
-       // colocar if isEmpty
         return orcamentoRepository.findAll();
     }
 
@@ -62,9 +60,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
     @Override
     public Orcamento deleteById(Integer id) {
         Orcamento orcamentoExcluido = orcamentoRepository.findById(id).get();
-
         orcamentoRepository.delete(orcamentoExcluido);
-
         return orcamentoExcluido;
     }
 
