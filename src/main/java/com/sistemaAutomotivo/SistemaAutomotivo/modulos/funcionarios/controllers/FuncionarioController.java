@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities.Equipe;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.dto.FuncionarioDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.services.FuncionarioService;
@@ -39,6 +40,11 @@ public class FuncionarioController {
     @GetMapping("/{idFuncionario}")
     public ResponseEntity<Funcionario> findFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario) {
         return ResponseEntity.ok(funcionarioService.findById(idFuncionario));
+    }
+
+    @GetMapping("/equipes/{idFuncionario}")
+    public ResponseEntity<List<Equipe>> findAllEquipes(@PathVariable("idFuncionario") Integer idFuncionario) {
+        return ResponseEntity.ok(funcionarioService.findAllEquipes(idFuncionario));
     }
 
     // UPDATE

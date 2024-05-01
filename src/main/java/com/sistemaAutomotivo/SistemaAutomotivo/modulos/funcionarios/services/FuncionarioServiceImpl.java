@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities.Equipe;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.dto.FuncionarioDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.repositories.FuncionarioRepository;
@@ -34,6 +35,13 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Override
     public Funcionario findById(Integer id) {
         return funcionarioRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Equipe> findAllEquipes(Integer idFuncionario) {
+        Funcionario funcionario = funcionarioRepository.findById(idFuncionario).get();
+
+        return funcionario.getEquipes();
     }
 
     // UPDATE
@@ -81,12 +89,4 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
         return funcionario;
     }
-
-
-
-
-
-
-
-
 }
