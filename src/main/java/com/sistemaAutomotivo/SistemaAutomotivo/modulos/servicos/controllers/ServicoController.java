@@ -25,11 +25,13 @@ public class ServicoController {
     @Autowired
     private ServicoService servicoService;
 
+    // CREATE
     @PostMapping()
     public ResponseEntity<Servico> saveServico(@RequestBody ServicoDTO servicoDTO) {
         return ResponseEntity.ok(servicoService.saveServico(servicoDTO));
     }
 
+    // READ
     @GetMapping()
     public ResponseEntity<List<Servico>> findAllServicos() {
         return ResponseEntity.ok(servicoService.findAllServicos());
@@ -40,11 +42,13 @@ public class ServicoController {
         return ResponseEntity.ok(servicoService.findById(id));
     }
 
+    // UPDATE
     @PatchMapping("/{id}")
     public ResponseEntity<Servico> updateServicoById(@PathVariable("id") Integer id, @RequestBody ServicoDTO servicoDTO) {
         return ResponseEntity.ok(servicoService.updateById(id, servicoDTO));
     }
 
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Servico> deleteServicoById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(servicoService.deleteById(id));

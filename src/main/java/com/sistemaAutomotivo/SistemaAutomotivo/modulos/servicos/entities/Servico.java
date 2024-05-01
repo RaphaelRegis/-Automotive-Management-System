@@ -2,9 +2,11 @@ package com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.ServicoOrcamento;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.entities.enums.TipoServico;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +34,8 @@ public class Servico {
     private double valor;
     private TipoServico tipoServico;
 
-    @OneToMany(mappedBy = "servico")
+    @OneToMany(mappedBy = "servico", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<ServicoOrcamento> servicos_orcamentos;
+
 }

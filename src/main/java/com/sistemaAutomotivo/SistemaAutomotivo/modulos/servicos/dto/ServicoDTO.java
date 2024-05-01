@@ -5,5 +5,5 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.entities.enums.T
 public record ServicoDTO(
     String nome,
     double valor,
-    TipoServico tipoServico) 
-    {}
+    TipoServico tipoServico
+    ){}
