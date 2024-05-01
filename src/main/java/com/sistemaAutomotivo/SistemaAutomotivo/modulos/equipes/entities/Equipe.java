@@ -3,12 +3,14 @@ package com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.ServicoOrcamento;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,19 +42,20 @@ public class Equipe {
 
     private String setor;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_responsavel", referencedColumnName = "id_funcionario")
     private Funcionario responsavel;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinTable(
         name = "membro_equipe",	//nome da nova tabela
         joinColumns = @JoinColumn(name = "id_equipe"), //qual coluna da entidade proprietária (a que tem o @JoinTable)
         inverseJoinColumns = @JoinColumn(name = "id_funcionario") //qual coluna da entidade do outro lado do relacionamento
     )
+    @JsonIgnore
     private List<Funcionario> membros;
 
-    @OneToMany(mappedBy = "equipe")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "equipe", cascade = CascadeType.DETACH)
+    @JsonIgnore
     private List<ServicoOrcamento> servicos_orcamentos;
-
 }

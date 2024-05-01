@@ -1,11 +1,13 @@
 package com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities.Equipe;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.dto.FuncionarioDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.repositories.FuncionarioRepository;
@@ -16,12 +18,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
     
+    // CREATE
     @Override
     public Funcionario saveFuncionario(FuncionarioDTO funcionarioDTO) {
         // colocar if existsByCPF
         return funcionarioRepository.save(DTOtoFuncionario(funcionarioDTO));
     }
 
+    // READ
     @Override
     public List<Funcionario> findAllFuncionarios() {
        // colocar if isEmpty
@@ -33,6 +37,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         return funcionarioRepository.findById(id).get();
     }
 
+    @Override
+    public List<Equipe> findAllEquipes(Integer idFuncionario) {
+        Funcionario funcionario = funcionarioRepository.findById(idFuncionario).get();
+
+        return funcionario.getEquipes();
+    }
+
+    // UPDATE
     @Override
     public Funcionario updateById(Integer id, FuncionarioDTO funcionarioDTO) {
         // pega o funcionario existente com base no id
@@ -49,6 +61,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         return funcionarioRepository.save(funcionarioExistente);
     }
 
+    // DELETE
     @Override
     public Funcionario deleteById(Integer id) {
         Funcionario funcionarioExcluido = funcionarioRepository.findById(id).get();
@@ -61,7 +74,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     // metodos auxiliares
     Funcionario DTOtoFuncionario(FuncionarioDTO funcionarioDTO) {
 
-        // o funcionario eh instanciado sem fazer parte e nem liderar nenhuma equipe
+        // o funcionario eh instanciado sem fazer de nenhuma equipe
         Funcionario funcionario = new Funcionario(
             null,
             funcionarioDTO.nome(),
@@ -72,13 +85,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
             funcionarioDTO.cargaHorariaSemanal(),
             funcionarioDTO.email(),
             funcionarioDTO.telefone(),
-            null,
-            null);
+            new ArrayList<>());
 
         return funcionario;
     }
-
-
-
-
 }

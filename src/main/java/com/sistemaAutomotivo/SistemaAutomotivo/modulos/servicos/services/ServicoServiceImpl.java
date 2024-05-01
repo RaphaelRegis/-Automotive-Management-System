@@ -1,5 +1,6 @@
 package com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -16,15 +17,15 @@ public class ServicoServiceImpl implements ServicoService {
     @Autowired
     private ServicoRepository servicoRepository;
     
+    // CREATE
     @Override
     public Servico saveServico(ServicoDTO servicoDTO) {
-        // colocar if existsByCPF
         return servicoRepository.save(DTOtoServico(servicoDTO));
     }
 
+    // READ
     @Override
     public List<Servico> findAllServicos() {
-       // colocar if isEmpty
         return servicoRepository.findAll();
     }
 
@@ -33,6 +34,7 @@ public class ServicoServiceImpl implements ServicoService {
         return servicoRepository.findById(id).get();
     }
 
+    // UPDATE
     @Override
     public Servico updateById(Integer id, ServicoDTO servicoDTO) {
         // pega o servico existente com base no id
@@ -49,6 +51,7 @@ public class ServicoServiceImpl implements ServicoService {
         return servicoRepository.save(servicoExistente);
     }
 
+    // DELETE
     @Override
     public Servico deleteById(Integer id) {
         Servico servicoExcluido = servicoRepository.findById(id).get();
@@ -67,7 +70,7 @@ public class ServicoServiceImpl implements ServicoService {
             servicoDTO.nome(),
             servicoDTO.valor(),
             servicoDTO.tipoServico(),
-            null);
+            new ArrayList<>());
 
         return servico;
     }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities.Equipe;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.dto.FuncionarioDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.services.FuncionarioService;
@@ -24,29 +25,38 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
 
+    // CREATE
     @PostMapping()
     public ResponseEntity<Funcionario> saveFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
         return ResponseEntity.ok(funcionarioService.saveFuncionario(funcionarioDTO));
     }
 
+    // READ
     @GetMapping()
     public ResponseEntity<List<Funcionario>> findAllFuncionarios() {
         return ResponseEntity.ok(funcionarioService.findAllFuncionarios());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Funcionario> findFuncionarioById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(funcionarioService.findById(id));
+    @GetMapping("/{idFuncionario}")
+    public ResponseEntity<Funcionario> findFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario) {
+        return ResponseEntity.ok(funcionarioService.findById(idFuncionario));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Funcionario> updateFuncionarioById(@PathVariable("id") Integer id, @RequestBody FuncionarioDTO funcionarioDTO) {
-        return ResponseEntity.ok(funcionarioService.updateById(id, funcionarioDTO));
+    @GetMapping("/equipes/{idFuncionario}")
+    public ResponseEntity<List<Equipe>> findAllEquipes(@PathVariable("idFuncionario") Integer idFuncionario) {
+        return ResponseEntity.ok(funcionarioService.findAllEquipes(idFuncionario));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Funcionario> deleteFuncionarioById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(funcionarioService.deleteById(id));
+    // UPDATE
+    @PatchMapping("/{idFuncionario}")
+    public ResponseEntity<Funcionario> updateFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario, @RequestBody FuncionarioDTO funcionarioDTO) {
+        return ResponseEntity.ok(funcionarioService.updateById(idFuncionario, funcionarioDTO));
+    }
+
+    // DELETE
+    @DeleteMapping("/{idFuncionario}")
+    public ResponseEntity<Funcionario> deleteFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario) {
+        return ResponseEntity.ok(funcionarioService.deleteById(idFuncionario));
     }
 
 }

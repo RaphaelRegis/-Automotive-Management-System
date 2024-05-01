@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.clientes.dto.ClienteDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.clientes.entities.Cliente;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.clientes.services.ClienteService;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.veiculos.entities.Veiculo;
 
 @RestController
 @RequestMapping("/api/clientes")
@@ -24,30 +25,38 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
-
+    
+    // CREATE
     @PostMapping()
     public ResponseEntity<Cliente> saveCliente(@RequestBody ClienteDTO clienteDTO) {
         return ResponseEntity.ok(clienteService.saveCliente(clienteDTO));
     }
 
+    // READ
     @GetMapping()
     public ResponseEntity<List<Cliente>> findAllClientes() {
         return ResponseEntity.ok(clienteService.findAllClientes());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Cliente> findClienteById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(clienteService.findById(id));
+    @GetMapping("/{idCliente}")
+    public ResponseEntity<Cliente> findClienteById(@PathVariable("idCliente") Integer idCliente) {
+        return ResponseEntity.ok(clienteService.findById(idCliente));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Cliente> updateClienteById(@PathVariable("id") Integer id, @RequestBody ClienteDTO clienteDTO) {
-        return ResponseEntity.ok(clienteService.updateById(id, clienteDTO));
+    @GetMapping("/veiculos/{idCliente}")
+    public ResponseEntity<List<Veiculo>> findClienteVeiculos(@PathVariable("idCliente") Integer idCliente) {
+        return ResponseEntity.ok(clienteService.findVeiculos(idCliente));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Cliente> deleteClienteById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(clienteService.deleteById(id));
+    // UPDATE
+    @PatchMapping("/{idCliente}")
+    public ResponseEntity<Cliente> updateClienteById(@PathVariable("idCliente") Integer idCliente, @RequestBody ClienteDTO clienteDTO) {
+        return ResponseEntity.ok(clienteService.updateById(idCliente, clienteDTO));
     }
 
+    // DELETE
+    @DeleteMapping("/{idCliente}")
+    public ResponseEntity<Cliente> deleteClienteById(@PathVariable("idCliente") Integer idCliente) {
+        return ResponseEntity.ok(clienteService.deleteById(idCliente));
+    }
 }
