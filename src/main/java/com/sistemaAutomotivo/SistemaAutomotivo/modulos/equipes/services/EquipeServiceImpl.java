@@ -12,8 +12,6 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities.Equipe;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.repositories.EquipeRepository;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.repositories.FuncionarioRepository;
-import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.MembroEquipe;
-import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.services.MembroEquipeService;
 
 @Service
 public class EquipeServiceImpl implements EquipeService {
@@ -23,9 +21,6 @@ public class EquipeServiceImpl implements EquipeService {
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
-
-    @Autowired
-    private MembroEquipeService membroEquipeService;
 
     // CREATE
     @Override
@@ -42,6 +37,13 @@ public class EquipeServiceImpl implements EquipeService {
     @Override
     public List<Equipe> findAllEquipes() {
         return equipeRepository.findAll();
+    }
+
+    @Override
+    public List<Funcionario> findAllMembros(Integer idEquipe) {
+        Equipe equipe = equipeRepository.findById(idEquipe).get();
+
+        return equipe.getMembros();
     }
 
     // UPDATE
@@ -62,14 +64,26 @@ public class EquipeServiceImpl implements EquipeService {
     }
 
     @Override
-    public MembroEquipe adicionarFuncionario(Integer idEquipe, Integer idFuncionario) {
-        return membroEquipeService.salvarMembroEquipe(idEquipe, idFuncionario);
+    public Funcionario adicionarFuncionario(Integer idEquipe, Integer idFuncionario) {
+        Equipe equipeExistente = equipeRepository.findById(idEquipe).get();
+        Funcionario funcionario = funcionarioRepository.findById(idFuncionario).get();
+
+        equipeExistente.getMembros().add(funcionario);
+        equipeRepository.save(equipeExistente);
+
+        return funcionario;
     }
 
     @Override
-    public MembroEquipe removerFuncionario(Integer idEquipe, Integer idFuncionario) {
-        MembroEquipe membroEquipe = membroEquipeService.findByEquipeAndFuncionario(idEquipe, idFuncionario);
-        return membroEquipeService.deleteMembroEquipeById(membroEquipe.getIdMembroEquipe());
+    public Funcionario removerFuncionario(Integer idEquipe, Integer idFuncionario) {
+        Equipe equipeExistente = equipeRepository.findById(idEquipe).get();
+        Funcionario funcionario = funcionarioRepository.findById(idFuncionario).get();
+
+        equipeExistente.getMembros().remove(funcionario);
+
+        equipeRepository.save(equipeExistente);
+
+        return funcionario;
     }
 
     // DELETE
@@ -87,13 +101,18 @@ public class EquipeServiceImpl implements EquipeService {
                 .findById(equipeDTO.idResponsavel())
                 .get();
 
+        List<Funcionario> membros = new ArrayList<>();
+        membros.add(funcionario);
+
         Equipe equipe = new Equipe(null,
                 equipeDTO.nome(),
                 equipeDTO.setor(),
                 funcionario,
-                new ArrayList<>(),
+                membros,
                 new ArrayList<>());
 
         return equipe;
     }
+
+    
 }

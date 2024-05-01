@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.dto.EquipeDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities.Equipe;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.services.EquipeService;
-import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.MembroEquipe;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
 
 @RestController
 @RequestMapping("/api/equipes")
@@ -41,6 +41,11 @@ public class EquipeController {
     public ResponseEntity<List<Equipe>> findAllEquipes() {
         return ResponseEntity.ok(equipeService.findAllEquipes());
     }
+
+    @GetMapping("/membros/{idEquipe}")
+    public ResponseEntity<List<Funcionario>> findAllMembros(@PathVariable("idEquipe") Integer idEquipe) {
+        return ResponseEntity.ok(equipeService.findAllMembros(idEquipe));
+    }
     
     // UPDATE
     @PatchMapping("/{idEquipe}")
@@ -49,12 +54,12 @@ public class EquipeController {
     }
 
     @PatchMapping("/adicionar/{idEquipe}/{idFuncionario}")
-    public ResponseEntity<MembroEquipe> adicionarFuncionario(@PathVariable("idEquipe") Integer idEquipe, @PathVariable("idFuncionario") Integer idFuncionario) {
+    public ResponseEntity<Funcionario> adicionarFuncionario(@PathVariable("idEquipe") Integer idEquipe, @PathVariable("idFuncionario") Integer idFuncionario) {
         return ResponseEntity.ok(equipeService.adicionarFuncionario(idEquipe, idFuncionario));
     }
 
     @PatchMapping("/remover/{idEquipe}/{idFuncionario}")
-    public ResponseEntity<MembroEquipe> removerFuncionario(@PathVariable("idEquipe") Integer idEquipe, @PathVariable("idFuncionario") Integer idFuncionario) {
+    public ResponseEntity<Funcionario> removerFuncionario(@PathVariable("idEquipe") Integer idEquipe, @PathVariable("idFuncionario") Integer idFuncionario) {
         return ResponseEntity.ok(equipeService.removerFuncionario(idEquipe, idFuncionario));
     }
     
