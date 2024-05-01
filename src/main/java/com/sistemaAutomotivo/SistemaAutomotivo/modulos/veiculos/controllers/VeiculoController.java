@@ -25,11 +25,13 @@ public class VeiculoController {
     @Autowired
     private VeiculoService veiculoService;
 
+    // CREATE
     @PostMapping()
     public ResponseEntity<Veiculo> saveVeiculo(@RequestBody VeiculoDTO veiculoDTO) {
         return ResponseEntity.ok(veiculoService.saveVeiculo(veiculoDTO));
     }
 
+    // READ
     @GetMapping()
     public ResponseEntity<List<Veiculo>> findAllVeiculos() {
         return ResponseEntity.ok(veiculoService.findAllVeiculos());
@@ -40,11 +42,13 @@ public class VeiculoController {
         return ResponseEntity.ok(veiculoService.findById(id));
     }
 
+    // UPDATE
     @PatchMapping("/{id}")
     public ResponseEntity<Veiculo> updateVeiculoById(@PathVariable("id") Integer id, @RequestBody VeiculoDTO veiculoDTO) {
         return ResponseEntity.ok(veiculoService.updateById(id, veiculoDTO));
     }
 
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Veiculo> deleteVeiculoById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(veiculoService.deleteById(id));

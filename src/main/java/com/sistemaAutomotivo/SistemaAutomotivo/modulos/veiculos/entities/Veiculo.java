@@ -36,7 +36,7 @@ public class Veiculo {
     private int ano;
 
     // chave estrangeira
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     private Cliente cliente;
 }
