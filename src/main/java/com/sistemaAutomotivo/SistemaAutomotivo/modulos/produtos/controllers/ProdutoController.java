@@ -25,11 +25,13 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    // CREATE
     @PostMapping()
     public ResponseEntity<Produto> saveProduto(@RequestBody ProdutoDTO produtoDTO) {
         return ResponseEntity.ok(produtoService.saveProduto(produtoDTO));
     }
 
+    // READ
     @GetMapping()
     public ResponseEntity<List<Produto>> findAllProdutos() {
         return ResponseEntity.ok(produtoService.findAllProdutos());
@@ -40,11 +42,13 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoService.findById(id));
     }
 
+    // UPDATE
     @PatchMapping("/{id}")
     public ResponseEntity<Produto> updateProdutoById(@PathVariable("id") Integer id, @RequestBody ProdutoDTO produtoDTO) {
         return ResponseEntity.ok(produtoService.updateById(id, produtoDTO));
     }
 
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Produto> deleteProdutoById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(produtoService.deleteById(id));

@@ -1,5 +1,6 @@
 package com.sistemaAutomotivo.SistemaAutomotivo.modulos.produtos.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -16,15 +17,15 @@ public class ProdutoServiceImpl implements ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
     
+    // CREATE
     @Override
     public Produto saveProduto(ProdutoDTO produtoDTO) {
-        // colocar if existsByCPF
         return produtoRepository.save(DTOtoProduto(produtoDTO));
     }
 
+    // READ
     @Override
     public List<Produto> findAllProdutos() {
-       // colocar if isEmpty
         return produtoRepository.findAll();
     }
 
@@ -33,9 +34,9 @@ public class ProdutoServiceImpl implements ProdutoService {
         return produtoRepository.findById(id).get();
     }
 
+    // UPDATE
     @Override
     public Produto updateById(Integer id, ProdutoDTO produtoDTO) {
-        // pega o produto existente com base no id
         Produto produtoExistente = findById(id);
         
         // constroi o produto atualizado
@@ -49,6 +50,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         return produtoRepository.save(produtoExistente);
     }
 
+    // DELETE
     @Override
     public Produto deleteById(Integer id) {
         Produto produtoExcluido = produtoRepository.findById(id).get();
@@ -64,7 +66,8 @@ public class ProdutoServiceImpl implements ProdutoService {
             null,
             produtoDTO.nome(),
             produtoDTO.categoria(),
-            produtoDTO.valor());
+            produtoDTO.valor(),
+            new ArrayList<>());
 
         return produto;
     }
