@@ -28,11 +28,11 @@ public class ProdutoOrcamento {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id_produto_orcamento;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_produto", referencedColumnName = "id_produto")
     private Produto produto;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_orcamento", referencedColumnName = "id_orcamento")
     private Orcamento orcamento;
         
