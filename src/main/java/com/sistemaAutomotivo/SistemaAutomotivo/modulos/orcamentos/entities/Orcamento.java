@@ -3,9 +3,11 @@ package com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.entities.enums.Status;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.ServicoOrcamento;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.ProdutoOrcamento;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.veiculos.entities.Veiculo;
 
 import jakarta.persistence.CascadeType;
@@ -38,16 +40,21 @@ public class Orcamento {
 
     private Status status;
     
-    private double total_orcamento;
+    //private double total_orcamento;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_responsavel", referencedColumnName = "id_funcionario")
     private Funcionario responsavel;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_veiculo", referencedColumnName = "id_veiculo")
     private Veiculo veiculo;
 
-    @OneToMany(mappedBy = "orcamento")
+    @OneToMany(mappedBy = "orcamento", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private List<ProdutoOrcamento> produtos_orcamentos;
+
+    @OneToMany(mappedBy = "orcamento", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<ServicoOrcamento> servicos_orcamentos;
 }

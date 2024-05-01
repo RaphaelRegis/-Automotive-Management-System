@@ -4,6 +4,10 @@ import java.util.List;
 
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.dto.OrcamentoDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.entities.Orcamento;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.dto.ProdutoOrcamentoDTO;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.dto.ServicoOrcamentoDTO;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.ProdutoOrcamento;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.ServicoOrcamento;
 
 public interface OrcamentoService {
     
@@ -13,9 +17,13 @@ public interface OrcamentoService {
     // READ
     List<Orcamento> findAllOrcamentos();
     Orcamento findById(Integer id);
+    String verifyTotalOrcamento(Integer idOrcamento);
 
     // UPDATE
     Orcamento updateById(Integer id, OrcamentoDTO orcamentoDTO);
+    ProdutoOrcamento orcarProduto(ProdutoOrcamentoDTO produtoOrcamentoDTO);
+    ServicoOrcamento orcarServico(ServicoOrcamentoDTO servicoOrcamentoDTO);
+
 
     // DELETE
     Orcamento deleteById(Integer id);
