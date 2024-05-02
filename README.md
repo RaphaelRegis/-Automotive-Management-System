@@ -23,7 +23,7 @@
 *   Veículo
 *   Orçamento
   
-    <h2>BUSINESS RULES</h2>
+  <h2>BUSINESS RULES</h2>
 
 FUNCIONARIO E EQUIPE:
 - Funcionario só é excluido se não for líder de nenhuma equipe;
