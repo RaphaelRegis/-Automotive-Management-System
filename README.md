@@ -41,7 +41,7 @@ CLIENTE E VEICULO:
 ORCAMENTO:
 - Excluiu Orcamento, excluiu seus Produto_Orcamento e Servico_Orcamento;
 
-<h2>SEQUENCIA DE PASSOS</h2>
+<h2>STEPS</h2>
 
 - Adicionar Funcionario ("/api/funcionarios");
 - Adicionar Equipe ("/api/equipes");
