@@ -42,15 +42,21 @@ ORCAMENTO:
 - Excluiu Orcamento, excluiu seus Produto_Orcamento e Servico_Orcamento;
 
 <h2>SEQUENCIA DE PASSOS</h2>
+
 - Adicionar Funcionario ("/api/funcionarios");
 - Adicionar Equipe ("/api/equipes");
+  
 - Adicionar Produto ("/api/produtos");
+  
 - Adicionar Servico ("/api/servicos");
+  
 - Adicionar Cliente ("/api/clientes");
+  
 - Adicionar Veiculo ("/api/veiculos");
+  
 - Adicionar Orcamento ("/api/orcamentos");
 - Orcar Servico ("/api/orcarServico");
 - Orcar Produto ("/api/orcarProduto");
-- Verificar preço do orçamento("/totalOrcamento/{idOrcamento}");
+- Verificar preço do orçamento ("/totalOrcamento/{idOrcamento}");
 
-<i>Nota: para fins de demonstração e simplicidade, as operações não estão contextualizadas, portanto, utilizam o id das entidades ao invés de colunas mais específicas, como CPF e CNPJ</i>
+<i>Nota: para fins de demonstração e simplicidade, as operações não estão contextualizadas, portanto, utilizam o id das entidades ao invés de colunas mais específicas, como CPF e CNPJ.</i>
