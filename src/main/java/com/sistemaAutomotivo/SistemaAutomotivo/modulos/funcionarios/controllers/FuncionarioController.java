@@ -33,30 +33,35 @@ public class FuncionarioController {
 
     // READ
     @GetMapping()
-    public ResponseEntity<List<Funcionario>> findAllFuncionarios() {
+    public ResponseEntity<List<Funcionario>> findAllFuncionarios(){
         return ResponseEntity.ok(funcionarioService.findAllFuncionarios());
     }
 
-    @GetMapping("/{idFuncionario}")
-    public ResponseEntity<Funcionario> findFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario) {
+    /*@GetMapping("/{idFuncionario}")
+    public ResponseEntity<Funcionario> findFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario) throws Exception  {
         return ResponseEntity.ok(funcionarioService.findById(idFuncionario));
+    }*/
+
+    @GetMapping("/equipes/{cpfFuncionario}")
+    public ResponseEntity<List<Equipe>> findAllEquipes(@PathVariable("cpfFuncionario") String cpfFuncionario) {
+        return ResponseEntity.ok(funcionarioService.findAllEquipes(cpfFuncionario));
     }
 
-    @GetMapping("/equipes/{idFuncionario}")
-    public ResponseEntity<List<Equipe>> findAllEquipes(@PathVariable("idFuncionario") Integer idFuncionario) {
-        return ResponseEntity.ok(funcionarioService.findAllEquipes(idFuncionario));
+    @GetMapping("/{cpfFuncionario}")
+    public ResponseEntity<Funcionario> findFuncionarioByCpf(@PathVariable("cpfFuncionario") String cpfFuncionario) {
+        return ResponseEntity.ok(funcionarioService.findByCpf(cpfFuncionario));
     }
 
     // UPDATE
-    @PatchMapping("/{idFuncionario}")
-    public ResponseEntity<Funcionario> updateFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario, @RequestBody FuncionarioDTO funcionarioDTO) {
-        return ResponseEntity.ok(funcionarioService.updateById(idFuncionario, funcionarioDTO));
+    @PatchMapping("/{cpfFuncionario}")
+    public ResponseEntity<Funcionario> updateFuncionarioByCpf(@PathVariable("cpfFuncionario") String cpfFuncionario, @RequestBody FuncionarioDTO funcionarioDTO) {
+        return ResponseEntity.ok(funcionarioService.updateByCpf(cpfFuncionario, funcionarioDTO));
     }
 
     // DELETE
-    @DeleteMapping("/{idFuncionario}")
-    public ResponseEntity<Funcionario> deleteFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario) {
-        return ResponseEntity.ok(funcionarioService.deleteById(idFuncionario));
+    @DeleteMapping("/{cpfFuncionario}")
+    public ResponseEntity<Funcionario> deleteFuncionarioById(@PathVariable("cpfFuncionario") String cpfFuncionario) {
+        return ResponseEntity.ok(funcionarioService.deleteByCpf(cpfFuncionario));
     }
 
 }

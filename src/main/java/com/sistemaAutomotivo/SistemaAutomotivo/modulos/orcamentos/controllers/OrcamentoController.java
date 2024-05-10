@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.dto.OrcamentoDTO;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.dto.ValorOrcamentoDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.entities.Orcamento;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.services.OrcamentoService;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.dto.ProdutoOrcamentoDTO;
@@ -46,7 +47,7 @@ public class OrcamentoController {
     }
 
     @GetMapping("/totalOrcamento/{idOrcamento}")
-    public ResponseEntity<String> verifyTotalOrcamento(@PathVariable("idOrcamento") Integer idOrcamento) {
+    public ResponseEntity<ValorOrcamentoDTO> verifyTotalOrcamento(@PathVariable("idOrcamento") Integer idOrcamento) {
         return ResponseEntity.ok(orcamentoService.verifyTotalOrcamento(idOrcamento));
     }
 

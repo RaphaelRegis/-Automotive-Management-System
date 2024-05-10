@@ -37,21 +37,21 @@ public class VeiculoController {
         return ResponseEntity.ok(veiculoService.findAllVeiculos());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Veiculo> findVeiculoById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(veiculoService.findById(id));
+    @GetMapping("/{placa}")
+    public ResponseEntity<Veiculo> findVeiculoByPlaca(@PathVariable("placa") String placa) {
+        return ResponseEntity.ok(veiculoService.findByPlaca(placa));
     }
 
     // UPDATE
-    @PatchMapping("/{id}")
-    public ResponseEntity<Veiculo> updateVeiculoById(@PathVariable("id") Integer id, @RequestBody VeiculoDTO veiculoDTO) {
-        return ResponseEntity.ok(veiculoService.updateById(id, veiculoDTO));
+    @PatchMapping("/{placa}")
+    public ResponseEntity<Veiculo> updateVeiculoByPlaca(@PathVariable("placa") String placa, @RequestBody VeiculoDTO veiculoDTO) {
+        return ResponseEntity.ok(veiculoService.updateByPlaca(placa, veiculoDTO));
     }
 
     // DELETE
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Veiculo> deleteVeiculoById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(veiculoService.deleteById(id));
+    @DeleteMapping("/{placa}")
+    public ResponseEntity<Veiculo> deleteVeiculoByPlaca(@PathVariable("placa") String placa) {
+        return ResponseEntity.ok(veiculoService.deleteByPlaca(placa));
     }
 
 }

@@ -7,6 +7,6 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.entities.enums
 public record OrcamentoDTO(
     LocalDate data,
     Status status,
-    Integer idResponsavel,
-    Integer idVeiculo
+    String cpfResponsavel,
+    String placaVeiculo
 ) {}

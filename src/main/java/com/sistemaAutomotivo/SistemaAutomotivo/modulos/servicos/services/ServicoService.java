@@ -13,11 +13,11 @@ public interface ServicoService {
     
     // READ
     List<Servico> findAllServicos();
-    Servico findById(Integer id);
+    Servico findByNome(String nome);
     
     // UPDATE
-    Servico updateById(Integer id, ServicoDTO servicoDTO);
+    Servico updateByNome(String nome, ServicoDTO servicoDTO);
     
     // DELETE
-    Servico deleteById(Integer id);
+    Servico deleteByNome(String nome);
 }

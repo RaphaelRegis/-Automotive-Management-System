@@ -13,11 +13,11 @@ public interface ProdutoService {
     
     // READ
     List<Produto> findAllProdutos();
-    Produto findById(Integer id);
+    Produto findByNome(String nome);
     
     // UPDATE
-    Produto updateById(Integer id, ProdutoDTO produtoDTO);
+    Produto updateByNome(String nome, ProdutoDTO produtoDTO);
     
     // DELETE
-    Produto deleteById(Integer id);
+    Produto deleteByNome(String nome);
 }

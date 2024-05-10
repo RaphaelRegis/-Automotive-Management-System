@@ -14,13 +14,13 @@ public interface ClienteService {
     
     // READ
     List<Cliente> findAllClientes();
-    Cliente findById(Integer id);
-    List<Veiculo> findVeiculos(Integer idCliente);
+    Cliente findByCpfCnpj(String cpfCnpj);
+    List<Veiculo> findVeiculos(String cpfCnpj);
     
     // UPDATE
-    Cliente updateById(Integer id, ClienteDTO clienteDTO);
+    Cliente updateByCpfCnpj(String cpfCnpj, ClienteDTO clienteDTO);
     
     // DELETE
-    Cliente deleteById(Integer id);
+    Cliente deleteByCpfCnpj(String cpfCnpj);
 
 }

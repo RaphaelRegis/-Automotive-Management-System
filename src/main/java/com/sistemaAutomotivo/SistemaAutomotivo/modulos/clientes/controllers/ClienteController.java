@@ -38,25 +38,25 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.findAllClientes());
     }
 
-    @GetMapping("/{idCliente}")
-    public ResponseEntity<Cliente> findClienteById(@PathVariable("idCliente") Integer idCliente) {
-        return ResponseEntity.ok(clienteService.findById(idCliente));
+    @GetMapping("/{cpfCnpj}")
+    public ResponseEntity<Cliente> findClienteByCpfCnpj(@PathVariable("cpfCnpj") String cpfCnpj) {
+        return ResponseEntity.ok(clienteService.findByCpfCnpj(cpfCnpj));
     }
 
-    @GetMapping("/veiculos/{idCliente}")
-    public ResponseEntity<List<Veiculo>> findClienteVeiculos(@PathVariable("idCliente") Integer idCliente) {
-        return ResponseEntity.ok(clienteService.findVeiculos(idCliente));
+    @GetMapping("/veiculos/{cpfCnpj}")
+    public ResponseEntity<List<Veiculo>> findClienteVeiculos(@PathVariable("cpfCnpj") String cpfCnpj) {
+        return ResponseEntity.ok(clienteService.findVeiculos(cpfCnpj));
     }
 
     // UPDATE
-    @PatchMapping("/{idCliente}")
-    public ResponseEntity<Cliente> updateClienteById(@PathVariable("idCliente") Integer idCliente, @RequestBody ClienteDTO clienteDTO) {
-        return ResponseEntity.ok(clienteService.updateById(idCliente, clienteDTO));
+    @PatchMapping("/{cpfCnpj}")
+    public ResponseEntity<Cliente> updateClienteByCpfCnpj(@PathVariable("cpfCnpj") String cpfCnpj, @RequestBody ClienteDTO clienteDTO) {
+        return ResponseEntity.ok(clienteService.updateByCpfCnpj(cpfCnpj, clienteDTO));
     }
 
     // DELETE
-    @DeleteMapping("/{idCliente}")
-    public ResponseEntity<Cliente> deleteClienteById(@PathVariable("idCliente") Integer idCliente) {
-        return ResponseEntity.ok(clienteService.deleteById(idCliente));
+    @DeleteMapping("/{cpfCnpj}")
+    public ResponseEntity<Cliente> deleteClienteByCpfCnpj(@PathVariable("cpfCnpj") String cpfCnpj) {
+        return ResponseEntity.ok(clienteService.deleteByCpfCnpj(cpfCnpj));
     }
 }

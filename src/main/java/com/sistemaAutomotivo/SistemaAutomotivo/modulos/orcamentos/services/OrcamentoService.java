@@ -3,6 +3,7 @@ package com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.services;
 import java.util.List;
 
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.dto.OrcamentoDTO;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.dto.ValorOrcamentoDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.entities.Orcamento;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.dto.ProdutoOrcamentoDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.dto.ServicoOrcamentoDTO;
@@ -17,7 +18,7 @@ public interface OrcamentoService {
     // READ
     List<Orcamento> findAllOrcamentos();
     Orcamento findById(Integer id);
-    String verifyTotalOrcamento(Integer idOrcamento);
+    ValorOrcamentoDTO verifyTotalOrcamento(Integer idOrcamento);
 
     // UPDATE
     Orcamento updateById(Integer id, OrcamentoDTO orcamentoDTO);

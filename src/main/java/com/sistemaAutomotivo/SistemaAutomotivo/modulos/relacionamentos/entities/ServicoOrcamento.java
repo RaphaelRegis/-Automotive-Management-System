@@ -2,7 +2,6 @@ package com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities
 
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities.Equipe;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.entities.Orcamento;
-//import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.entities.Orcamento;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.entities.Servico;
 
 import jakarta.persistence.CascadeType;
