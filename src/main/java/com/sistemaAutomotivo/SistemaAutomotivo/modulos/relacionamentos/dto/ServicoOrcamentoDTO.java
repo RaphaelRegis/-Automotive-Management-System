@@ -1,8 +1,8 @@
 package com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.dto;
 
 public record ServicoOrcamentoDTO(
-    Integer idServico,
+    String nomeServico,
     Integer idOrcamento,
-    Integer idEquipe,
+    String nomeEquipe,
     String observacao
 ) {}
