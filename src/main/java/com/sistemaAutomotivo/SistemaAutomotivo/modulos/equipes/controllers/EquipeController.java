@@ -32,40 +32,45 @@ public class EquipeController {
     }
 
     // READ
-    @GetMapping("/{idEquipe}")
+    /*@GetMapping("/{idEquipe}")
     public ResponseEntity<Equipe> findById(@PathVariable("idEquipe") Integer idEquipe) {
         return ResponseEntity.ok(equipeService.findById(idEquipe));
-    }
+    }*/
 
     @GetMapping()
     public ResponseEntity<List<Equipe>> findAllEquipes() {
         return ResponseEntity.ok(equipeService.findAllEquipes());
     }
 
-    @GetMapping("/membros/{idEquipe}")
-    public ResponseEntity<List<Funcionario>> findAllMembros(@PathVariable("idEquipe") Integer idEquipe) {
-        return ResponseEntity.ok(equipeService.findAllMembros(idEquipe));
+    @GetMapping("/membros/{nomeEquipe}")
+    public ResponseEntity<List<Funcionario>> findAllMembros(@PathVariable("nomeEquipe") String nomeEquipe) {
+        return ResponseEntity.ok(equipeService.findAllMembros(nomeEquipe));
+    }
+
+    @GetMapping("/{nomeEquipe}")
+    public ResponseEntity<Equipe> findById(@PathVariable("nomeEquipe") String nomeEquipe) {
+        return ResponseEntity.ok(equipeService.findByNome(nomeEquipe));
     }
     
     // UPDATE
-    @PatchMapping("/{idEquipe}")
-    public ResponseEntity<Equipe> updateEquipeById(@PathVariable("idEquipe") Integer idEquipe, @RequestBody EquipeDTO equipeAtualizada) {
-        return ResponseEntity.ok(equipeService.updateEquipeById(idEquipe, equipeAtualizada));
+    @PatchMapping("/{nomeEquipe}")
+    public ResponseEntity<Equipe> updateEquipeById(@PathVariable("nomeEquipe") String nomeEquipe, @RequestBody EquipeDTO equipeAtualizada) {
+        return ResponseEntity.ok(equipeService.updateEquipeByNome(nomeEquipe, equipeAtualizada));
     }
 
-    @PatchMapping("/adicionar/{idEquipe}/{idFuncionario}")
-    public ResponseEntity<Funcionario> adicionarFuncionario(@PathVariable("idEquipe") Integer idEquipe, @PathVariable("idFuncionario") Integer idFuncionario) {
-        return ResponseEntity.ok(equipeService.adicionarFuncionario(idEquipe, idFuncionario));
+    @PatchMapping("/adicionar/{nomeEquipe}/{cpfFuncionario}")
+    public ResponseEntity<Funcionario> adicionarFuncionario(@PathVariable("nomeEquipe") String nomeEquipe, @PathVariable("cpfFuncionario") String cpfFuncionario) {
+        return ResponseEntity.ok(equipeService.adicionarFuncionario(nomeEquipe, cpfFuncionario));
     }
 
-    @PatchMapping("/remover/{idEquipe}/{idFuncionario}")
-    public ResponseEntity<Funcionario> removerFuncionario(@PathVariable("idEquipe") Integer idEquipe, @PathVariable("idFuncionario") Integer idFuncionario) {
-        return ResponseEntity.ok(equipeService.removerFuncionario(idEquipe, idFuncionario));
+    @PatchMapping("/remover/{nomeEquipe}/{cpfFuncionario}")
+    public ResponseEntity<Funcionario> removerFuncionario(@PathVariable("nomeEquipe") String nomeEquipe, @PathVariable("cpfFuncionario") String cpfFuncionario) {
+        return ResponseEntity.ok(equipeService.removerFuncionario(nomeEquipe, cpfFuncionario));
     }
     
     // DELETE
-    @DeleteMapping("/{idEquipe}")
-    public ResponseEntity<Equipe> deleteEquipeById(@PathVariable("idEquipe") Integer idEquipe) {
-        return ResponseEntity.ok(equipeService.deleteEquipeById(idEquipe));
+    @DeleteMapping("/{nomeEquipe}")
+    public ResponseEntity<Equipe> deleteEquipeById(@PathVariable("nomeEquipe") String nomeEquipe) {
+        return ResponseEntity.ok(equipeService.deleteEquipeByNome(nomeEquipe));
     }
 }
