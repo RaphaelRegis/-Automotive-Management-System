@@ -59,4 +59,3 @@ ORCAMENTO:
 - Orcar Produto ("/api/orcarProduto");
 - Verificar preço do orçamento ("/totalOrcamento/{idOrcamento}");
 
-<i>Nota: para fins de demonstração e simplicidade, as operações não estão contextualizadas, portanto, utilizam o id das entidades ao invés de colunas mais específicas, como CPF e CNPJ.</i>
