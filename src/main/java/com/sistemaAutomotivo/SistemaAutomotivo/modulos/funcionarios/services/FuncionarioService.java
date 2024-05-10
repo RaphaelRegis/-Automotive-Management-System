@@ -14,13 +14,14 @@ public interface FuncionarioService {
     // READ
     List<Funcionario> findAllFuncionarios();
     Funcionario findById(Integer id);
-    List<Equipe> findAllEquipes(Integer idFuncionario);
+    List<Equipe> findAllEquipes(String cpf);
+    Funcionario findByCpf(String cpf);
 
     // UPDATE
-    Funcionario updateById(Integer id, FuncionarioDTO funcionarioDTO);
+    Funcionario updateByCpf(String cpf, FuncionarioDTO funcionarioDTO);
 
     // DELETE
-    Funcionario deleteById(Integer id);
+    Funcionario deleteByCpf(String cpf);
 
 
 }
