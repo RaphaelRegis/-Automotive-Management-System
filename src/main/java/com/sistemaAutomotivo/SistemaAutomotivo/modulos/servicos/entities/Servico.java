@@ -7,6 +7,7 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.entities.enums.TipoServico;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +31,7 @@ public class Servico {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id_servico;
 
+    @Column(nullable = false, unique = true)
     private String nome;
     private double valor;
     private TipoServico tipoServico;

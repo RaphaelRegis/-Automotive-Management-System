@@ -37,21 +37,21 @@ public class ServicoController {
         return ResponseEntity.ok(servicoService.findAllServicos());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Servico> findServicoById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(servicoService.findById(id));
+    @GetMapping("/{nome}")
+    public ResponseEntity<Servico> findServicoById(@PathVariable("nome") String nome) {
+        return ResponseEntity.ok(servicoService.findByNome(nome));
     }
 
     // UPDATE
-    @PatchMapping("/{id}")
-    public ResponseEntity<Servico> updateServicoById(@PathVariable("id") Integer id, @RequestBody ServicoDTO servicoDTO) {
-        return ResponseEntity.ok(servicoService.updateById(id, servicoDTO));
+    @PatchMapping("/{nome}")
+    public ResponseEntity<Servico> updateServicoById(@PathVariable("nome") String nome, @RequestBody ServicoDTO servicoDTO) {
+        return ResponseEntity.ok(servicoService.updateByNome(nome, servicoDTO));
     }
 
     // DELETE
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Servico> deleteServicoById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(servicoService.deleteById(id));
+    @DeleteMapping("/{nome}")
+    public ResponseEntity<Servico> deleteServicoById(@PathVariable("nome") String nome) {
+        return ResponseEntity.ok(servicoService.deleteByNome(nome));
     }
 
 }
