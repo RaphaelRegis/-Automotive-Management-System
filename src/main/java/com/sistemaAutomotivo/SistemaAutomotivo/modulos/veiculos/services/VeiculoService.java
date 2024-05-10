@@ -13,11 +13,11 @@ public interface VeiculoService {
     
     // READ
     List<Veiculo> findAllVeiculos();
-    Veiculo findById(Integer id);
+    Veiculo findByPlaca(String placa);
     
     // UPDATE
-    Veiculo updateById(Integer id, VeiculoDTO veiculoDTO);
+    Veiculo updateByPlaca(String placa, VeiculoDTO veiculoDTO);
     
     // DELETE
-    Veiculo deleteById(Integer id);
+    Veiculo deleteByPlaca(String placa);
 }

@@ -4,4 +4,4 @@ public record VeiculoDTO(
 String descricao,
 String placa,
 int ano,
-Integer idCliente) {}
+String cpfCnpjCliente) {}
