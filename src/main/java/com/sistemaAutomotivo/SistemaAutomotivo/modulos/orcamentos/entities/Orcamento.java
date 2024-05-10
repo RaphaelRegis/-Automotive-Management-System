@@ -39,8 +39,6 @@ public class Orcamento {
     private LocalDate data;
 
     private Status status;
-    
-    //private double total_orcamento;
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_responsavel", referencedColumnName = "id_funcionario")

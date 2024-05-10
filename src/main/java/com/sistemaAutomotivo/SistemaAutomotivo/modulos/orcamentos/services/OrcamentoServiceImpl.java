@@ -3,18 +3,18 @@ package com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.entities.Equipe;
-import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.repositories.EquipeRepository;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.equipes.services.EquipeService;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
-import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.repositories.FuncionarioRepository;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.services.FuncionarioService;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.dto.OrcamentoDTO;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.dto.ValorOrcamentoDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.entities.Orcamento;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.produtos.entities.Produto;
-import com.sistemaAutomotivo.SistemaAutomotivo.modulos.produtos.repositories.ProdutoRepository;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.produtos.services.ProdutoService;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.dto.ProdutoOrcamentoDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.dto.ServicoOrcamentoDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.ProdutoOrcamento;
@@ -23,9 +23,9 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.repositor
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.repositories.ServicoOrcamentoRepository;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.orcamentos.repositories.OrcamentoRepository;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.entities.Servico;
-import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.repositories.ServicoRepository;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.services.ServicoService;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.veiculos.entities.Veiculo;
-import com.sistemaAutomotivo.SistemaAutomotivo.modulos.veiculos.repositories.VeiculoRepository;
+import com.sistemaAutomotivo.SistemaAutomotivo.modulos.veiculos.services.VeiculoService;
 
 @Service
 public class OrcamentoServiceImpl implements OrcamentoService {
@@ -34,25 +34,25 @@ public class OrcamentoServiceImpl implements OrcamentoService {
     private OrcamentoRepository orcamentoRepository;
 
     @Autowired
-    private FuncionarioRepository funcionarioRepository;
+    private FuncionarioService funcionarioService;
 
     @Autowired
-    private VeiculoRepository veiculoRepository;
+    private VeiculoService veiculoService;
 
     @Autowired
-    private ServicoRepository servicoRepository;
+    private ProdutoService produtoService;
+
+    @Autowired
+    private ServicoService servicoService;
+
+    @Autowired
+    private EquipeService equipeService;
 
     @Autowired
     private ServicoOrcamentoRepository servicoOrcamentoRepository;
 
     @Autowired
-    private ProdutoRepository produtoRepository;
-
-    @Autowired
     private ProdutoOrcamentoRepository produtoOrcamentoRepository;
-
-    @Autowired
-    private EquipeRepository equipeRepository;
 
     // CREATE
     @Override
@@ -63,29 +63,37 @@ public class OrcamentoServiceImpl implements OrcamentoService {
     // READ
     @Override
     public List<Orcamento> findAllOrcamentos() {
-        return orcamentoRepository.findAll();
+
+        List<Orcamento> todosOrcamentos = orcamentoRepository.findAll();
+
+        if (todosOrcamentos.isEmpty()) {
+            throw new RuntimeException("Nenhum orçamento encontrado!");
+        }
+
+        return todosOrcamentos;
     }
 
     @Override
     public Orcamento findById(Integer id) {
-        return orcamentoRepository.findById(id).get();
+        return orcamentoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nenhum orçamento com esse id encontrado!"));
     }
 
     @Override
-    public String verifyTotalOrcamento(Integer idOrcamento) {
+    public ValorOrcamentoDTO verifyTotalOrcamento(Integer idOrcamento) {
 
         Orcamento orcamento = findById(idOrcamento);
         Double valor = 0.0;
 
-        for(ProdutoOrcamento produtoOrcamento: orcamento.getProdutos_orcamentos()) {
+        for (ProdutoOrcamento produtoOrcamento : orcamento.getProdutos_orcamentos()) {
             valor += produtoOrcamento.getValor();
         }
 
-        for(ServicoOrcamento servicoOrcamento: orcamento.getServicos_orcamentos()) {
+        for (ServicoOrcamento servicoOrcamento : orcamento.getServicos_orcamentos()) {
             valor += servicoOrcamento.getValor();
         }
 
-        return "Valor total do orçamento: R$ " + valor;
+        return new ValorOrcamentoDTO(orcamento.getId_orcamento(), orcamento.getProdutos_orcamentos(), orcamento.getServicos_orcamentos(), valor);
     }
 
     // UPDATE
@@ -95,11 +103,15 @@ public class OrcamentoServiceImpl implements OrcamentoService {
         Orcamento orcamentoExistente = findById(id);
 
         // constroi o orcamento atualizado
-        Orcamento orcamentoAtualizado = DTOtoOrcamento(orcamentoDTO);
-        orcamentoAtualizado.setId_orcamento(orcamentoExistente.getId_orcamento());
+        orcamentoExistente.setData(orcamentoDTO.data());
+        orcamentoExistente.setStatus(orcamentoDTO.status());
 
-        // copia as propriedades do orcamento atualizado para o existente
-        BeanUtils.copyProperties(orcamentoAtualizado, orcamentoExistente);
+        if (!(orcamentoDTO.cpfResponsavel().equals(orcamentoExistente.getResponsavel().getCpf()))) {
+            orcamentoExistente.setResponsavel(funcionarioService.findByCpf(orcamentoDTO.cpfResponsavel()));
+        }
+        if (!(orcamentoDTO.placaVeiculo().equals(orcamentoExistente.getVeiculo().getPlaca()))) {
+            orcamentoExistente.setVeiculo(veiculoService.findByPlaca(orcamentoDTO.placaVeiculo()));
+        }
 
         // salva e retorna novamente o orcamento existente
         return orcamentoRepository.save(orcamentoExistente);
@@ -107,7 +119,9 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 
     @Override
     public ProdutoOrcamento orcarProduto(ProdutoOrcamentoDTO produtoOrcamentoDTO) {
-        Produto produto = produtoRepository.findById(produtoOrcamentoDTO.idProduto()).get();
+
+        Produto produto = produtoService.findByNome(produtoOrcamentoDTO.nomeProduto());
+
         Orcamento orcamento = findById(produtoOrcamentoDTO.idOrcamento());
 
         Double valor = produto.getValor() * produtoOrcamentoDTO.qtd();
@@ -125,9 +139,12 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 
     @Override
     public ServicoOrcamento orcarServico(ServicoOrcamentoDTO servicoOrcamentoDTO) {
-        Servico servico = servicoRepository.findById(servicoOrcamentoDTO.idServico()).get();
+
+        Servico servico = servicoService.findByNome(servicoOrcamentoDTO.nomeServico());
+
         Orcamento orcamento = findById(servicoOrcamentoDTO.idOrcamento());
-        Equipe equipe = equipeRepository.findById(servicoOrcamentoDTO.idEquipe()).get();
+
+        Equipe equipe = equipeService.findByNome(servicoOrcamentoDTO.nomeEquipe());
 
         ServicoOrcamento servicoOrcamento = new ServicoOrcamento(
                 null,
@@ -143,7 +160,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
     // DELETE
     @Override
     public Orcamento deleteById(Integer id) {
-        Orcamento orcamentoExcluido = orcamentoRepository.findById(id).get();
+        Orcamento orcamentoExcluido = findById(id);
         orcamentoRepository.delete(orcamentoExcluido);
         return orcamentoExcluido;
     }
@@ -151,14 +168,13 @@ public class OrcamentoServiceImpl implements OrcamentoService {
     // metodos auxiliares
     public Orcamento DTOtoOrcamento(OrcamentoDTO orcamentoDTO) {
 
-        Funcionario funcionario = funcionarioRepository.findById(orcamentoDTO.idResponsavel()).get();
-        Veiculo veiculo = veiculoRepository.findById(orcamentoDTO.idVeiculo()).get();
+        Funcionario funcionario = funcionarioService.findByCpf(orcamentoDTO.cpfResponsavel());
+        Veiculo veiculo = veiculoService.findByPlaca(orcamentoDTO.placaVeiculo());
 
         Orcamento orcamento = new Orcamento(
                 null,
                 orcamentoDTO.data(),
                 orcamentoDTO.status(),
-                //0,
                 funcionario,
                 veiculo,
                 new ArrayList<>(),
