@@ -37,21 +37,21 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoService.findAllProdutos());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Produto> findProdutoById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(produtoService.findById(id));
+    @GetMapping("/{nome}")
+    public ResponseEntity<Produto> findProdutoByNome(@PathVariable("nome") String nome) {
+        return ResponseEntity.ok(produtoService.findByNome(nome));
     }
 
     // UPDATE
-    @PatchMapping("/{id}")
-    public ResponseEntity<Produto> updateProdutoById(@PathVariable("id") Integer id, @RequestBody ProdutoDTO produtoDTO) {
-        return ResponseEntity.ok(produtoService.updateById(id, produtoDTO));
+    @PatchMapping("/{nome}")
+    public ResponseEntity<Produto> updateProdutoByNome(@PathVariable("nome") String nome, @RequestBody ProdutoDTO produtoDTO) {
+        return ResponseEntity.ok(produtoService.updateByNome(nome, produtoDTO));
     }
 
     // DELETE
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Produto> deleteProdutoById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(produtoService.deleteById(id));
+    @DeleteMapping("/{nome}")
+    public ResponseEntity<Produto> deleteProdutoByNome(@PathVariable("nome") String nome) {
+        return ResponseEntity.ok(produtoService.deleteByNome(nome));
     }
 
 }
