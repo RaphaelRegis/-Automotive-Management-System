@@ -34,7 +34,7 @@ public class Cliente {
     private String nome;
 
     @Column(nullable = true, unique = true)
-    private String cpf_cnpj;
+    private String cpfCnpj;
 
     private TipoCliente tipo;
     private String telefoneContato;
