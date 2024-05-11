@@ -48,13 +48,13 @@ public class EquipeController {
     }
 
     @GetMapping("/{nomeEquipe}")
-    public ResponseEntity<Equipe> findById(@PathVariable("nomeEquipe") String nomeEquipe) {
+    public ResponseEntity<Equipe> findByNome(@PathVariable("nomeEquipe") String nomeEquipe) {
         return ResponseEntity.ok(equipeService.findByNome(nomeEquipe));
     }
     
     // UPDATE
     @PatchMapping("/{nomeEquipe}")
-    public ResponseEntity<Equipe> updateEquipeById(@PathVariable("nomeEquipe") String nomeEquipe, @RequestBody EquipeDTO equipeAtualizada) {
+    public ResponseEntity<Equipe> updateEquipeByNome(@PathVariable("nomeEquipe") String nomeEquipe, @RequestBody EquipeDTO equipeAtualizada) {
         return ResponseEntity.ok(equipeService.updateEquipeByNome(nomeEquipe, equipeAtualizada));
     }
 
@@ -70,7 +70,7 @@ public class EquipeController {
     
     // DELETE
     @DeleteMapping("/{nomeEquipe}")
-    public ResponseEntity<Equipe> deleteEquipeById(@PathVariable("nomeEquipe") String nomeEquipe) {
+    public ResponseEntity<Equipe> deleteEquipeByNome(@PathVariable("nomeEquipe") String nomeEquipe) {
         return ResponseEntity.ok(equipeService.deleteEquipeByNome(nomeEquipe));
     }
 }
