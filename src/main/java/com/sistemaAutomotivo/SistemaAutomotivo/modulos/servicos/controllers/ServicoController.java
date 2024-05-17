@@ -18,8 +18,14 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.dto.ServicoDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.entities.Servico;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.servicos.services.ServicoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/servicos")
+@Tag(name = "Módulo Serviços")
+@SecurityRequirement(name = "bearerAuth")
 public class ServicoController {
 
     @Autowired
@@ -27,30 +33,45 @@ public class ServicoController {
 
     // CREATE
     @PostMapping()
+    @Operation(
+        summary = "Salvar Serviço"
+    )
     public ResponseEntity<Servico> saveServico(@RequestBody ServicoDTO servicoDTO) {
         return ResponseEntity.ok(servicoService.saveServico(servicoDTO));
     }
 
     // READ
     @GetMapping()
+    @Operation(
+        summary = "Encontrar todos os Serviços"
+    )
     public ResponseEntity<List<Servico>> findAllServicos() {
         return ResponseEntity.ok(servicoService.findAllServicos());
     }
 
     @GetMapping("/{nome}")
-    public ResponseEntity<Servico> findServicoById(@PathVariable("nome") String nome) {
+    @Operation(
+        summary = "Encontrar Serviço por nome"
+    )
+    public ResponseEntity<Servico> findServicoByNome(@PathVariable("nome") String nome) {
         return ResponseEntity.ok(servicoService.findByNome(nome));
     }
 
     // UPDATE
     @PatchMapping("/{nome}")
-    public ResponseEntity<Servico> updateServicoById(@PathVariable("nome") String nome, @RequestBody ServicoDTO servicoDTO) {
+    @Operation(
+        summary = "Atualizar Serviço por nome"
+    )
+    public ResponseEntity<Servico> updateServicoByNome(@PathVariable("nome") String nome, @RequestBody ServicoDTO servicoDTO) {
         return ResponseEntity.ok(servicoService.updateByNome(nome, servicoDTO));
     }
 
     // DELETE
     @DeleteMapping("/{nome}")
-    public ResponseEntity<Servico> deleteServicoById(@PathVariable("nome") String nome) {
+    @Operation(
+        summary = "Deletar Serviço por nome"
+    )
+    public ResponseEntity<Servico> deleteServicoByNome(@PathVariable("nome") String nome) {
         return ResponseEntity.ok(servicoService.deleteByNome(nome));
     }
 

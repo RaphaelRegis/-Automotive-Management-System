@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +17,12 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.seguranca.entities.Usuari
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.seguranca.repositories.UsuarioRepository;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.seguranca.services.TokenService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Registro e Login de Usuário")
 public class AuthenticationController {
     
     @Autowired
@@ -31,14 +34,10 @@ public class AuthenticationController {
     @Autowired
 	private TokenService tokenService;
 
-
-
-    @GetMapping()
-    public String obter() {
-        return "foi algo";
-    }
-
     @PostMapping("/register")
+    @Operation(
+        summary = "Registrar novo Usuário"
+    )
     public ResponseEntity<Object> register(@RequestBody RegisterDTO data) {
 
         if (usuarioRepository.existsByNomeUsuario(data.userName())) {
@@ -52,6 +51,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
+    @Operation(
+        summary = "Login do Usuário"
+    )
     public ResponseEntity<LoginResponseDTO> login(@RequestBody AuthenticationDTO data) {
 
         var userNamePassword = new UsernamePasswordAuthenticationToken(data.userName(), data.password());

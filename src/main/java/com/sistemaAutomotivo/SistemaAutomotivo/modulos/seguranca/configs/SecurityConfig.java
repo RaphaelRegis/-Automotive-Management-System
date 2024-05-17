@@ -96,6 +96,8 @@ public class SecurityConfig {
                         // modulo servicos
                         .requestMatchers(HttpMethod.GET, "/api/servicos/").hasAuthority("CLIENTE")
                         .requestMatchers(HttpMethod.GET, "/api/servicos/{nome}").hasAuthority("CLIENTE")
+                        // REQUISICOES DA DOCUMENTACAO
+                        .requestMatchers("/v3/api-docs", "/v3/api-docs/**","/swagger-ui/**").permitAll()
                         // QUALQUER OUTRA REQUISICAO
                         .anyRequest().authenticated())
                         .csrf(AbstractHttpConfigurer::disable)
