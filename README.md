@@ -10,6 +10,8 @@
 
 *   Java
 *   Spring Boot
+*   Spring Security
+*   Swagger
 *   Maven
 *   H2 memory database
 
@@ -22,6 +24,7 @@
 *   Cliente
 *   Veículo
 *   Orçamento
+*   Segurança
   
   <h2>BUSINESS RULES</h2>
 
@@ -59,3 +62,4 @@ ORCAMENTO:
 - Orcar Produto ("/api/orcarProduto");
 - Verificar preço do orçamento ("/totalOrcamento/{idOrcamento}");
 
+<i>Those steps can be made with the Swagger UI - found in "/swagger-ui/index.html#"</i>
