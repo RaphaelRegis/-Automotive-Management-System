@@ -18,8 +18,14 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.dto.Funciona
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.entities.Funcionario;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.funcionarios.services.FuncionarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/funcionarios")
+@Tag(name = "Módulo Funcionários")
+@SecurityRequirement(name = "bearerAuth")
 public class FuncionarioController {
 
     @Autowired
@@ -27,39 +33,52 @@ public class FuncionarioController {
 
     // CREATE
     @PostMapping()
+    @Operation(
+        summary = "Salvar Funcionário"
+    )
     public ResponseEntity<Funcionario> saveFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
         return ResponseEntity.ok(funcionarioService.saveFuncionario(funcionarioDTO));
     }
 
     // READ
     @GetMapping()
+    @Operation(
+        summary = "Encontrar todos Funcionários"
+    )
     public ResponseEntity<List<Funcionario>> findAllFuncionarios(){
         return ResponseEntity.ok(funcionarioService.findAllFuncionarios());
     }
 
-    /*@GetMapping("/{idFuncionario}")
-    public ResponseEntity<Funcionario> findFuncionarioById(@PathVariable("idFuncionario") Integer idFuncionario) throws Exception  {
-        return ResponseEntity.ok(funcionarioService.findById(idFuncionario));
-    }*/
-
     @GetMapping("/equipes/{cpfFuncionario}")
+    @Operation(
+        summary = "Encontrar todas equipes do Funcionário"
+    )
     public ResponseEntity<List<Equipe>> findAllEquipes(@PathVariable("cpfFuncionario") String cpfFuncionario) {
         return ResponseEntity.ok(funcionarioService.findAllEquipes(cpfFuncionario));
     }
 
     @GetMapping("/{cpfFuncionario}")
+    @Operation(
+        summary = "Encontrar Funcionário por CPF"
+    )
     public ResponseEntity<Funcionario> findFuncionarioByCpf(@PathVariable("cpfFuncionario") String cpfFuncionario) {
         return ResponseEntity.ok(funcionarioService.findByCpf(cpfFuncionario));
     }
 
     // UPDATE
     @PatchMapping("/{cpfFuncionario}")
+    @Operation(
+        summary = "Atualizar Funcionário por CPF"
+    )
     public ResponseEntity<Funcionario> updateFuncionarioByCpf(@PathVariable("cpfFuncionario") String cpfFuncionario, @RequestBody FuncionarioDTO funcionarioDTO) {
         return ResponseEntity.ok(funcionarioService.updateByCpf(cpfFuncionario, funcionarioDTO));
     }
 
     // DELETE
     @DeleteMapping("/{cpfFuncionario}")
+    @Operation(
+        summary = "Deletar Funcionário por CPF"
+    )
     public ResponseEntity<Funcionario> deleteFuncionarioById(@PathVariable("cpfFuncionario") String cpfFuncionario) {
         return ResponseEntity.ok(funcionarioService.deleteByCpf(cpfFuncionario));
     }

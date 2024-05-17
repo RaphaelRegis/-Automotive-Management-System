@@ -22,8 +22,14 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.dto.Servi
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.ProdutoOrcamento;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.relacionamentos.entities.ServicoOrcamento;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/orcamentos")
+@Tag(name = "Módulo Orçamentos")
+@SecurityRequirement(name = "bearerAuth")
 public class OrcamentoController {
 
     @Autowired
@@ -31,44 +37,68 @@ public class OrcamentoController {
 
     // CREATE
     @PostMapping()
+    @Operation(
+        summary = "Salvar Orçamento"
+    )
     public ResponseEntity<Orcamento> saveOrcamento(@RequestBody OrcamentoDTO orcamentoDTO) {
         return ResponseEntity.ok(orcamentoService.saveOrcamento(orcamentoDTO));
     }
 
     // READ
     @GetMapping()
+    @Operation(
+        summary = "Encontrar todos os Orçamentos"
+    )
     public ResponseEntity<List<Orcamento>> findAllOrcamentos() {
         return ResponseEntity.ok(orcamentoService.findAllOrcamentos());
     }
 
     @GetMapping("/{idOrcamento}")
+    @Operation(
+        summary = "Encontrar Orçamento por id"
+    )
     public ResponseEntity<Orcamento> findOrcamentoById(@PathVariable("idOrcamento") Integer idOrcamento) {
         return ResponseEntity.ok(orcamentoService.findById(idOrcamento));
     }
 
     @GetMapping("/totalOrcamento/{idOrcamento}")
+    @Operation(
+        summary = "Verificar total do Orçamento por id"
+    )
     public ResponseEntity<ValorOrcamentoDTO> verifyTotalOrcamento(@PathVariable("idOrcamento") Integer idOrcamento) {
         return ResponseEntity.ok(orcamentoService.verifyTotalOrcamento(idOrcamento));
     }
 
     // UPDATE
     @PatchMapping("/{idOrcamento}")
+    @Operation(
+        summary = "Atualizar Orçamento"
+    )
     public ResponseEntity<Orcamento> updateOrcamentoById(@PathVariable("idOrcamento") Integer idOrcamento, @RequestBody OrcamentoDTO orcamentoDTO) {
         return ResponseEntity.ok(orcamentoService.updateById(idOrcamento, orcamentoDTO));
     }
 
     @PatchMapping("/orcarProduto")
+    @Operation(
+        summary = "Orçar Produto para o Orçamento"
+    )
     public ResponseEntity<ProdutoOrcamento> orcarProduto(@RequestBody ProdutoOrcamentoDTO produtoOrcamentoDTO) {
         return ResponseEntity.ok(orcamentoService.orcarProduto(produtoOrcamentoDTO));
     }
 
     @PatchMapping("/orcarServico")
+    @Operation(
+        summary = "Orçar Serviço para o Orçamento"
+    )
     public ResponseEntity<ServicoOrcamento> orcarServico(@RequestBody ServicoOrcamentoDTO servicoOrcamentoDTO) {
         return ResponseEntity.ok(orcamentoService.orcarServico(servicoOrcamentoDTO));
     }
 
     // DELETE
     @DeleteMapping("/{idOrcamento}")
+    @Operation(
+        summary = "Deletar Orçamento por id"
+    )
     public ResponseEntity<Orcamento> deleteOrcamento(@PathVariable("idOrcamento") Integer idOrcamento) {
         return ResponseEntity.ok(orcamentoService.deleteById(idOrcamento));
     }

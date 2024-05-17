@@ -18,8 +18,14 @@ import com.sistemaAutomotivo.SistemaAutomotivo.modulos.veiculos.dto.VeiculoDTO;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.veiculos.entities.Veiculo;
 import com.sistemaAutomotivo.SistemaAutomotivo.modulos.veiculos.services.VeiculoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/veiculos")
+@Tag(name = "Módulo Veículos")
+@SecurityRequirement(name = "bearerAuth")
 public class VeiculoController {
 
     @Autowired
@@ -27,29 +33,44 @@ public class VeiculoController {
 
     // CREATE
     @PostMapping()
+    @Operation(
+        summary = "Salvar Veículo"
+    )
     public ResponseEntity<Veiculo> saveVeiculo(@RequestBody VeiculoDTO veiculoDTO) {
         return ResponseEntity.ok(veiculoService.saveVeiculo(veiculoDTO));
     }
 
     // READ
     @GetMapping()
+    @Operation(
+        summary = "Encontrar todos os Veículos"
+    )
     public ResponseEntity<List<Veiculo>> findAllVeiculos() {
         return ResponseEntity.ok(veiculoService.findAllVeiculos());
     }
 
     @GetMapping("/{placa}")
+    @Operation(
+        summary = "Encontrar Veículo por placa"
+    )
     public ResponseEntity<Veiculo> findVeiculoByPlaca(@PathVariable("placa") String placa) {
         return ResponseEntity.ok(veiculoService.findByPlaca(placa));
     }
 
     // UPDATE
     @PatchMapping("/{placa}")
+    @Operation(
+        summary = "Atualizar Veículo por placa"
+    )
     public ResponseEntity<Veiculo> updateVeiculoByPlaca(@PathVariable("placa") String placa, @RequestBody VeiculoDTO veiculoDTO) {
         return ResponseEntity.ok(veiculoService.updateByPlaca(placa, veiculoDTO));
     }
 
     // DELETE
     @DeleteMapping("/{placa}")
+    @Operation(
+        summary = "Deletar Veículo por placa"
+    )
     public ResponseEntity<Veiculo> deleteVeiculoByPlaca(@PathVariable("placa") String placa) {
         return ResponseEntity.ok(veiculoService.deleteByPlaca(placa));
     }
